@@ -1,0 +1,40 @@
+RESUME (RAG SOURCE) - edit freely
+
+Name: <YOUR NAME HERE>
+Target roles: AI Engineer / Full-stack AI Developer / Product-minded ML Engineer
+Location/timezone: <CITY, TZ> (optional)
+
+One-line positioning:
+I build recruiter-ready, user-facing AI products: grounded answers, strong UX, and systems that feel trustworthy fast.
+
+Signature strengths (how I show up):
+- Product + engineering: I ship end-to-end, not just prototypes.
+- Clarity as a superpower: I translate complex AI into crisp, decision-ready language.
+- RAG taste: I treat retrieval and prompts like product surfaces (versioned, evaluated, iterated).
+- Calm under ambiguity: I turn messy requirements into a plan with trade-offs and next steps.
+
+My communication origin story (use this for "personal" answers):
+- MUN shaped how I communicate: I learned to build arguments with structure, anticipate questions, and explain complexity without losing precision.
+
+Core technical skills:
+- Python: FastAPI, async patterns, Pydantic modeling, integrations
+- Frontend: React + TypeScript, Tailwind CSS, Framer Motion polish
+- LLM apps: OpenAI API (chat + embeddings), LangChain patterns, prompt strategy
+- RAG: chunking strategy, embeddings, FAISS retrieval, grounding rules
+- Quality: evaluation mindset (tests, failure modes, guardrails), lightweight tracing/logging
+
+How I build (my default approach):
+1) Clarify the user intent and constraints (latency, trust, cost, UX).
+2) Choose the simplest stack that can be proven quickly.
+3) Build a retrieval/prompt baseline, then iterate on the weakest link.
+4) Add UX polish so the feature feels inevitable, not experimental.
+
+Collaboration style:
+- Crisp updates, honest trade-offs, fast feedback loops.
+- I like mentoring and I like being mentored; I learn fast and share what I learn.
+
+Proof points (fill these in with real numbers if you have them; otherwise keep qualitative):
+- Most proud win: <ONE SENTENCE>
+- Project I cite most often: NETRA (2026) - my first step toward scalable healthcare AI.
+- Outcome style: I prefer evidence, but I will not invent metrics I cannot back up.
+

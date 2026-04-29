@@ -1,0 +1,22 @@
+ACHIEVEMENTS (RAG SOURCE) - edit freely
+
+Recruiter-ready wins (short, punchy, and believable):
+- Shipped AI features with UX polish (not just "it works" - it feels premium).
+- Improved answer quality by tightening retrieval and prompt rules, not by pretending the model is perfect.
+- Built reusable patterns for testing prompts and catching regressions early.
+- Led cross-functional work with clear updates and trade-offs that helped others move faster.
+
+What I am known for (themes that repeat across my work):
+- Grounded answers: I do not let the system bluff. If context is missing, we ask.
+- Taste: small interaction details matter (typing cadence, loading states, clear affordances).
+- Trust: I optimize for reliability and user confidence, not flashy demos.
+
+Soft skills with hard outcomes:
+- My MUN background trained me to structure ideas, anticipate objections, and explain technical choices clearly.
+- I can communicate with recruiters, PMs, and engineers without changing the truth of the system.
+
+Impact placeholders (fill only with true specifics):
+- Best evidence metric: <e.g., reduction in hallucinations, improved task success rate, latency improvement>
+- Strongest testimonial: <quote or paraphrase>
+- Most proud moment: <one sentence>
+

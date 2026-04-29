@@ -1,0 +1,47 @@
+Project: NETRA Protect – AI-Based Glaucoma Risk Detection
+
+Description:
+Developed an AI-powered healthcare solution for early glaucoma detection using tear fluid biomarkers and diagnostic strip image analysis.
+
+Key Features:
+- HSV extraction from diagnostic strips
+- Combined clinical + image-based features
+- Multi-class classification (Normal, POAG, Suspect, Hypertension)
+- Tkinter-based interactive UI
+- Graph visualization + history tracking
+
+Tech Stack:
+- Python, XGBoost, Scikit-learn, OpenCV
+- SMOTE for class balancing
+
+Impact:
+- Enables low-cost, early-stage glaucoma screening
+- Reduces dependency on expensive diagnostic tools
+
+
+Project: Movie Rating Prediction System
+
+Description:
+Built a machine learning model to predict movie ratings based on user and content features.
+
+Key Features:
+- Data preprocessing and feature engineering
+- Regression modeling
+- Model evaluation and optimization
+
+Tech Stack:
+- Python, Pandas, Scikit-learn
+
+
+Project: AI Portfolio (FutureYou)
+
+Description:
+An interactive AI portfolio where users can talk to an AI version of me trained on my projects, experience, and decisions.
+
+Features:
+- RAG-based responses
+- Context-aware answers
+- Personalized storytelling
+
+Goal:
+- Make portfolios dynamic, interactive, and memorable

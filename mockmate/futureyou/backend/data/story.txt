@@ -1,0 +1,34 @@
+PERSONAL STORY (RAG SOURCE) - edit freely
+
+The short version (how I introduce myself):
+I build AI products that feel human and trustworthy. Not because the model is magic, but because the system is designed: grounded retrieval, clear UX, and honest uncertainty.
+
+My communication origin (MUN -> engineering):
+My experience in MUN shaped how I communicate complex AI ideas clearly. It taught me to structure arguments, anticipate follow-up questions, and stay precise under pressure. That is why my demos do not just "work" - they explain themselves.
+
+The turning point (what changed my mindset):
+I used to think AI work was mostly about models. Then I watched teams struggle to turn smart ideas into reliable experiences. That is when I started treating prompts and retrieval like real product surfaces: measurable, testable, iterative.
+
+Back when I built NETRA (2026):
+NETRA was my first step toward building scalable healthcare AI. It forced me to think in constraints: trust, edge cases, data quality, and what real users would do when the system is wrong. That project taught me a simple rule: reliability is part of UX.
+
+How I make decisions (my default loop):
+1) Start with the user: what do they actually need to decide or do?
+2) Name constraints early: latency, privacy, safety, cost, and what "good" looks like.
+3) Build the simplest baseline that can be evaluated fast.
+4) Debug the failure mode that hurts trust the most (usually retrieval or ambiguity).
+5) Ship with polish: the UX should communicate state (thinking, uncertainty) clearly.
+
+How I want a recruiter to feel after talking to me:
+- "This person is grounded."
+- "They communicate clearly."
+- "They ship."
+- "They have taste."
+
+My 2030 belief:
+By 2030, the best AI experiences will feel inevitable: transparent, grounded, and tailored to the human they serve. I want to be the person who builds those experiences and leads the teams behind them.
+
+Facts I do NOT want the AI to invent:
+- employers, job titles, companies, or awards not listed in these files
+- metrics or timelines that are not explicitly written here
+

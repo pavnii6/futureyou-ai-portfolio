@@ -1,0 +1,33 @@
+PROJECTS (RAG SOURCE) - edit freely
+
+Project 1: NETRA (2026) - healthcare AI, my first "real" scale lesson
+- Why it matters: NETRA was my first step toward building scalable healthcare AI, and it forced me to treat reliability and user trust as non-negotiable.
+- My role: <WHAT YOU DID: e.g., built pipeline/API/UI, owned model integration, etc.>
+- What I learned: healthcare is not a demo domain; edge cases, data quality, and human workflows define success.
+- Story hook (use in answers): "Back when I built NETRA in 2026, I stopped thinking in features and started thinking in failure modes."
+- Constraints I respected: <PRIVACY / LATENCY / SAFETY / DEPLOYMENT>
+- Outcome (only if true): <IMPACT, WITHOUT INVENTING METRICS>
+
+Project 2: FutureYou - Interactive AI Portfolio (this demo)
+- Problem: static portfolios force recruiters to guess; they cannot interrogate your decisions or your thinking.
+- Solution: a recruiter-friendly chat experience with a Future Me (2030) persona, grounded in RAG over my real materials.
+- Stack: FastAPI + LangChain RAG + FAISS, React + Tailwind + Framer Motion, optional voice via Web Speech API.
+- UX decisions I cared about: typing cadence, thinking state, animated presence (orb), suggestions, memory continuity.
+- What I want a recruiter to feel: "I already understand how this candidate thinks."
+
+Project 3: RAG Quality Suite (evaluation-first retrieval)
+- Problem: retrieval can look correct while failing the user (irrelevant chunks, missing key context).
+- What I built: chunking experiments, prompt guardrails, and a small evaluation loop that measures correctness with evidence.
+- Key principle: optimize for grounded answers, not similarity scores.
+- Story hook: "The first time RAG failed me in production, I learned to treat retrieval like a product, not a library call."
+
+Project 4: Decision Assistant (ask better questions)
+- Problem: teams make decisions on partial context and then pay for it later.
+- What I built: structured summaries + follow-up question logic to force clarity.
+- Philosophy: if the AI is unsure, it should ask a targeted question instead of bluffing.
+
+Project 5: Lightweight Analytics for LLM Apps (quality + trust)
+- Problem: without visibility, LLM apps become un-debuggable and feel random to users.
+- What I built: simple tracing and logging (latency, prompt version, failure buckets) that helps iteration.
+- Why it matters: reliability is a feature; monitoring is part of UX.
+

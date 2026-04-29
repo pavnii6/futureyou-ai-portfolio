@@ -1,0 +1,25 @@
+node_modules
+dist
+build
+.next
+.turbo
+.env
+.env.*
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+.pytest_cache/
+.python-version
+
+# FAISS index persistence
+vectorstore/
+
+# OS
+Thumbs.db
+Desktop.ini
+
