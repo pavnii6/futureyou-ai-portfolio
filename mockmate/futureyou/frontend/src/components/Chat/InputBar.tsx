@@ -30,7 +30,7 @@ export default function InputBar({
     if (!isSupported && voiceInputEnabled) setVoiceInputEnabled(false);
   }, [isSupported, listening, onListeningChange, setVoiceInputEnabled, voiceInputEnabled]);
 
-  const placeholder = "Ask Future Me anything...";
+  const placeholder = "Ask Pavni Srivastava anything...";
 
   return (
     <div className="rounded-2xl border border-white/10 bg-white/3 backdrop-blur-md px-3 py-2 shadow-[0_0_35px_rgba(56,189,248,.06)]">

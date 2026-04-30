@@ -12,7 +12,7 @@ def create_app() -> FastAPI:
 
     app = FastAPI(
         title="FutureYou – Interactive AI Portfolio",
-        description="Chat with Future Me (2030) using Groq.",
+        description="Chat with Pavni Srivastava using Groq.",
         version="1.0.0",
     )
 
