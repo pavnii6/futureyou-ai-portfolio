@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import os
 from functools import lru_cache
-from pathlib import Path
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -14,28 +13,8 @@ class Settings(BaseSettings):
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
-    # Groq LLM
+    # Groq
     groq_api_key: str = os.getenv("GROQ_API_KEY", "")
-    groq_chat_model: str = os.getenv("GROQ_CHAT_MODEL", "llama3-70b-8192")
-
-    # Local embeddings (non-OpenAI)
-    embedding_model: str = os.getenv("EMBEDDING_MODEL", "sentence-transformers/all-MiniLM-L6-v2")
-
-    # RAG inputs
-    data_dir: str = os.getenv("RAG_DATA_DIR", str(Path(__file__).resolve().parents[3] / "data"))
-    vectorstore_dir: str = os.getenv(
-        "VECTORSTORE_DIR",
-        str(Path(__file__).resolve().parents[3] / "vectorstore"),
-    )
-
-    # Retrieval / chunking
-    chunk_size: int = int(os.getenv("RAG_CHUNK_SIZE", "900"))
-    chunk_overlap: int = int(os.getenv("RAG_CHUNK_OVERLAP", "150"))
-    top_k: int = int(os.getenv("RAG_TOP_K", "6"))
-
-    # Prompt / generation
-    temperature: float = float(os.getenv("LLM_TEMPERATURE", "0.6"))
-    max_history_messages: int = int(os.getenv("MAX_HISTORY_MESSAGES", "12"))
 
     # App
     cors_allow_origins: str = os.getenv("CORS_ALLOW_ORIGINS", "*")

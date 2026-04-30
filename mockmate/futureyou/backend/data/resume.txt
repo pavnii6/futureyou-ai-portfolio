@@ -19,7 +19,7 @@ My communication origin story (use this for "personal" answers):
 Core technical skills:
 - Python: FastAPI, async patterns, Pydantic modeling, integrations
 - Frontend: React + TypeScript, Tailwind CSS, Framer Motion polish
-- LLM apps: OpenAI API (chat + embeddings), LangChain patterns, prompt strategy
+- LLM apps: Groq API (chat), LangChain patterns, prompt strategy
 - RAG: chunking strategy, embeddings, FAISS retrieval, grounding rules
 - Quality: evaluation mindset (tests, failure modes, guardrails), lightweight tracing/logging
 
