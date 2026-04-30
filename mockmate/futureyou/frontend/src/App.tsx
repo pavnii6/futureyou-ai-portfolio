@@ -27,7 +27,7 @@ function getGreeting(): ChatMessage {
     id: makeId(),
     role: "assistant",
     content:
-      "Welcome. I'm Future Me (2030). Ask me about my projects, decisions, strengths, or ambition, and I'll answer with grounded context and a sharper narrative than a static portfolio ever could.",
+      "Welcome. I'm Pavni Srivastava Ask me about my projects, decisions, strengths, or ambition, and I'll answer with grounded context and a sharper narrative than a static portfolio ever could.",
     timestamp: nowTimeString(),
   };
 }
@@ -239,7 +239,7 @@ export default function App() {
           <div className="rounded-[28px] border border-white/10 bg-white/[0.04] p-4 backdrop-blur-xl shadow-[0_0_0_1px_rgba(255,255,255,.03),0_0_40px_rgba(56,189,248,.06)]">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <div className="font-display text-sm font-semibold text-slate-100">FutureYou (2030)</div>
+                <div className="font-display text-sm font-semibold text-slate-100">Pavni Srivastava</div>
                 <div className="text-xs text-slate-400">Interactive AI portfolio</div>
               </div>
               <div className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] uppercase tracking-[0.22em] text-slate-300/85">
