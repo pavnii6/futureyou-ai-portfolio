@@ -29,9 +29,10 @@ async def chat(
     await verify_turnstile(x_turnstile_token or "", remoteip=client_ip)
 
     try:
-        content = await generate_response(req.message)
-        return ChatResponse(response=content)
-    except Exception as e:
+    content = await generate_response(req.message)
+    return ChatResponse(response=content)
+
+except Exception as e:
     print("ERROR:", e)
-    raise e
+    return ChatResponse(response="Something went wrong. Please try again.")
 
