@@ -17,7 +17,8 @@ export type DemoTurn = {
 export const coreSuggestionChips = [
   "Tell me about your best project",
   "Why should we hire you?",
-  "What makes you different?",
+  "What are your achievements?",
+  "What are your hobbies?",
 ];
 
 export const modeSuggestionChips: Record<ChatMode, string[]> = {
