@@ -31,6 +31,7 @@ async def chat(
     try:
         content = await generate_response(req.message)
         return ChatResponse(response=content)
-    except Exception:
-        return ChatResponse(response=FALLBACK_RESPONSE)
+    except Exception as e:
+    print("ERROR:", e)
+    raise e
 
