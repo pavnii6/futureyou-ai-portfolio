@@ -1,6 +1,7 @@
 import { Mic, MicOff, Send } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
+import { useSpeechToText } from "../../hooks/useSpeechToText";
 
 export default function InputBar({
   value,
@@ -19,68 +20,15 @@ export default function InputBar({
   setVoiceInputEnabled: (v: boolean) => void;
   onListeningChange?: (listening: boolean) => void;
 }) {
-  const [listening, setListening] = useState(false);
-  const recognitionRef = useRef<any>(null);
-
-  const SpeechRecognitionCtor = useMemo(() => {
-    const w = window as any;
-    return w.SpeechRecognition || w.webkitSpeechRecognition || null;
-  }, []);
+  const { isListening: listening, isSupported } = useSpeechToText({
+    enabled: voiceInputEnabled,
+    onTranscript: onChange,
+  });
 
   useEffect(() => {
-    if (!SpeechRecognitionCtor) return;
-
-    const recognition = new SpeechRecognitionCtor();
-    recognition.lang = "en-US";
-    recognition.continuous = true;
-    recognition.interimResults = true;
-
-    recognition.onresult = (event: any) => {
-      let transcript = "";
-      for (let i = event.resultIndex; i < event.results.length; i += 1) {
-        transcript += event.results[i][0].transcript;
-      }
-      // Update input with live transcript.
-      if (transcript.trim().length > 0) onChange(transcript.trim());
-    };
-
-    recognition.onerror = () => {
-      setListening(false);
-      onListeningChange?.(false);
-      setVoiceInputEnabled(false);
-    };
-
-    recognition.onend = () => {
-      setListening(false);
-      onListeningChange?.(false);
-      // Keep the toggle on; the user can tap again.
-    };
-
-    recognitionRef.current = recognition;
-  }, [SpeechRecognitionCtor, onChange, setVoiceInputEnabled]);
-
-  useEffect(() => {
-    if (!SpeechRecognitionCtor) return;
-    if (!voiceInputEnabled) {
-      try {
-        recognitionRef.current?.stop?.();
-      } catch {
-        // ignore
-      }
-      setListening(false);
-      onListeningChange?.(false);
-      return;
-    }
-
-    // Start/stop recognition based on toggle.
-    try {
-      recognitionRef.current?.start?.();
-      setListening(true);
-      onListeningChange?.(true);
-    } catch {
-      // Some browsers throw if start is called twice.
-    }
-  }, [SpeechRecognitionCtor, voiceInputEnabled, onListeningChange]);
+    onListeningChange?.(listening);
+    if (!isSupported && voiceInputEnabled) setVoiceInputEnabled(false);
+  }, [isSupported, listening, onListeningChange, setVoiceInputEnabled, voiceInputEnabled]);
 
   const placeholder = "Ask Future Me anything...";
 
@@ -105,12 +53,12 @@ export default function InputBar({
           }
           transition={listening ? { duration: 1.1, repeat: Infinity, ease: "easeInOut" } : undefined}
           onClick={() => setVoiceInputEnabled(!voiceInputEnabled)}
-          disabled={disabled || !SpeechRecognitionCtor}
+          disabled={disabled || !isSupported}
           className={[
             "inline-flex h-10 w-10 items-center justify-center rounded-xl border text-slate-100/90 transition disabled:opacity-50",
             listening ? "border-cyan-300/60 bg-cyan-400/10" : "border-white/10 bg-white/5",
           ].join(" ")}
-          title={SpeechRecognitionCtor ? "Voice input" : "Voice input not supported in this browser"}
+          title={isSupported ? "Voice input" : "Voice input not supported in this browser"}
         >
           {listening ? <MicOff size={18} /> : <Mic size={18} />}
         </motion.button>
@@ -129,6 +77,7 @@ export default function InputBar({
             }}
             className="w-full bg-transparent text-sm text-slate-100 placeholder:text-slate-400 outline-none"
           />
+          {listening && <div className="mt-1 text-[11px] text-cyan-300/90">Listening...</div>}
         </div>
 
         <motion.button
