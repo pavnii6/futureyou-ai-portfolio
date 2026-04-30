@@ -14,8 +14,7 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     # Groq
-    groq_api_key: str = os.getenv("GROQ_API_KEY")
-    print("GROQ KEY:", groq_api_key)
+    groq_api_key: str = os.getenv("GROQ_API_KEY", "")
     # App
     cors_allow_origins: str = os.getenv("CORS_ALLOW_ORIGINS", "*")
     port: int = int(os.getenv("PORT", "8000"))
