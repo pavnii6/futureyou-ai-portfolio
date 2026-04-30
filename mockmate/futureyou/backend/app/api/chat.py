@@ -28,11 +28,10 @@ async def chat(
     get_rate_limiter().check(client_ip)
     await verify_turnstile(x_turnstile_token or "", remoteip=client_ip)
 
-    try:
+try:
     content = await generate_response(req.message)
     return ChatResponse(response=content)
 
 except Exception as e:
     print("ERROR:", e)
     return ChatResponse(response="Something went wrong. Please try again.")
-
