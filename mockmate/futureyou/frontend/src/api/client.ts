@@ -1,4 +1,4 @@
-export type ChatMode = "interview" | "roast" | "vision";
+export type ChatMode = "interview" | "vision";
 
 export type ChatHistoryItem = { role: "user" | "assistant"; content: string };
 type ChatApiResponse = { success: boolean; reply?: string; error?: string };

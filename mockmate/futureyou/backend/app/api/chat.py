@@ -33,7 +33,7 @@ async def chat(
         get_rate_limiter().check(client_ip)
         await verify_turnstile(x_turnstile_token or "", remoteip=client_ip)
 
-        content = await generate_response(req.message.strip())
+        content = await generate_response(req.message.strip(), mode=req.mode)
         return ChatResponse(success=True, reply=content)
     except HTTPException:
         # Preserve FastAPI HTTP errors for correct status handling.

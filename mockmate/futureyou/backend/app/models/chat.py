@@ -5,7 +5,7 @@ from typing import Literal, List, Optional
 from pydantic import BaseModel, Field
 
 
-Mode = Literal["interview", "roast", "vision"]
+Mode = Literal["interview", "vision"]
 
 
 class ChatHistoryItem(BaseModel):

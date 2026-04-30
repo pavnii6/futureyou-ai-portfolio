@@ -305,7 +305,7 @@ export default function App() {
               <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
                 <div className="text-[11px] text-slate-400">Mode</div>
                 <div className="mt-1 text-sm font-semibold text-slate-100">
-                  {mode === "interview" ? "Interview" : mode === "roast" ? "Roast" : "Vision"}
+                  {mode === "interview" ? "Interview" : "Vision"}
                 </div>
               </div>
             </div>

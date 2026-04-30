@@ -26,15 +26,10 @@ export const modeSuggestionChips: Record<ChatMode, string[]> = {
     "Walk me through a project where your communication mattered.",
     "How do you make AI products feel useful, not gimmicky?",
   ],
-  roast: [
-    "What is the weakest part of your portfolio story right now?",
-    "Where are you still too generic, and how would you fix it fast?",
-    "If you were the recruiter, what would make you hesitate?",
-  ],
   vision: [
-    "How do you see your career compounding by 2030?",
-    "What future are you building toward with AI products?",
-    "What decision today most changes your 2030 trajectory?",
+    "What's your 2030 vision for AI products?",
+    "Where do you see yourself leading in the AI space?",
+    "What future are you building toward?",
   ],
 };
 

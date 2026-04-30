@@ -3,7 +3,6 @@ import type { ChatMode } from "../api/client";
 
 const modeGlow: Record<ChatMode, string> = {
   interview: "from-cyan-400/35 via-sky-400/25 to-indigo-400/20",
-  roast: "from-fuchsia-400/35 via-rose-400/25 to-amber-300/20",
   vision: "from-violet-400/35 via-cyan-300/25 to-emerald-300/20",
 };
 

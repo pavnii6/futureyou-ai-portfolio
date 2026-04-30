@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Target, Flame, Rocket } from "lucide-react";
+import { Target, Rocket } from "lucide-react";
 import type { ChatMode } from "../api/client";
 import type { ReactNode } from "react";
 
@@ -10,8 +10,7 @@ const modes: Array<{
   hint: string;
 }> = [
   { id: "interview", label: "🎯 Interview Mode", icon: <Target size={16} />, hint: "Recruiter Q&A & clarity" },
-  { id: "roast", label: "🔥 Roast Mode", icon: <Flame size={16} />, hint: "Honest feedback & growth" },
-  { id: "vision", label: "🚀 Vision Mode", icon: <Rocket size={16} />, hint: "Bold predictions to 2030" },
+  { id: "vision", label: "🚀 Vision Mode", icon: <Rocket size={16} />, hint: "My 2030 vision & ambitions" },
 ];
 
 export default function ModeToggle({
