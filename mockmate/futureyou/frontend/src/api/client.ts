@@ -17,7 +17,7 @@ export async function sendChat(params: {
   signal?: AbortSignal;
 }): Promise<string> {
   const apiUrl = getApiUrl();
-  const finalUrl = `${apiUrl}/api/chat`;
+  const finalUrl = `${apiUrl}/chat`;
   console.log("[FutureYou] Chat API URL:", finalUrl);
   const headers: Record<string, string> = { "Content-Type": "application/json" };
   if (params.turnstileToken) headers["X-Turnstile-Token"] = params.turnstileToken;
