@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Literal, List
+from typing import Literal, List, Optional
 
 from pydantic import BaseModel, Field
 
@@ -20,5 +20,7 @@ class ChatRequest(BaseModel):
 
 
 class ChatResponse(BaseModel):
-    response: str
+    success: bool
+    reply: Optional[str] = None
+    error: Optional[str] = None
 

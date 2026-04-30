@@ -154,7 +154,7 @@ export default function App() {
           m.id === assistantMsgId
             ? {
                 ...m,
-                content: `I couldn't generate a response. ${msg}\n\nTip: verify your OPENAI_API_KEY and that the FAISS index can build from backend/data.`,
+                content: `I couldn't generate a response. ${msg}\n\nTip: verify your GROQ_API_KEY in backend environment variables.`,
                 isTyping: false,
               }
             : m,

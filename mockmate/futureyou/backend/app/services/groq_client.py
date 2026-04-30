@@ -13,6 +13,7 @@ logger = logging.getLogger(__name__)
 @lru_cache(maxsize=1)
 def get_groq_client() -> Groq:
     api_key = os.getenv("GROQ_API_KEY", "")
+    logger.info("GROQ_API_KEY configured: %s", bool(api_key))
     if not api_key:
         raise RuntimeError("GROQ_API_KEY is not set in the environment.")
     return Groq(api_key=api_key)
@@ -39,6 +40,7 @@ async def generate_response(prompt: str) -> str:
             content = response.choices[0].message.content if response.choices else None
             if not content:
                 raise RuntimeError("Model returned empty content.")
+            logger.info("Groq response received (chars=%d)", len(content))
             return content
         except Exception as exc:
             logger.exception("Groq API call failed: %s", exc)
