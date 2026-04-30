@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -10,6 +11,14 @@ body {
 /* Subtle neon grain overlay */
 body {
   overflow-x: hidden;
+  font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+}
+
+h1,
+h2,
+h3,
+.font-display {
+  font-family: "Orbitron", "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
 }
 
 .noise::before {

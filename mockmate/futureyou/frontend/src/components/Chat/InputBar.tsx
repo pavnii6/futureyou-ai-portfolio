@@ -1,4 +1,4 @@
-import { Mic, MicOff, Send, Volume2, VolumeX } from "lucide-react";
+import { Mic, MicOff, Send } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
@@ -9,8 +9,6 @@ export default function InputBar({
   disabled,
   voiceInputEnabled,
   setVoiceInputEnabled,
-  voiceOutputEnabled,
-  setVoiceOutputEnabled,
   onListeningChange,
 }: {
   value: string;
@@ -19,8 +17,6 @@ export default function InputBar({
   disabled: boolean;
   voiceInputEnabled: boolean;
   setVoiceInputEnabled: (v: boolean) => void;
-  voiceOutputEnabled: boolean;
-  setVoiceOutputEnabled: (v: boolean) => void;
   onListeningChange?: (listening: boolean) => void;
 }) {
   const [listening, setListening] = useState(false);
@@ -147,17 +143,6 @@ export default function InputBar({
           <span className="hidden sm:inline">Send</span>
         </motion.button>
 
-        <motion.button
-          type="button"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.99 }}
-          onClick={() => setVoiceOutputEnabled(!voiceOutputEnabled)}
-          disabled={disabled}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-100/90 transition disabled:opacity-50"
-          title="Voice output (speaks Future Me responses)"
-        >
-          {voiceOutputEnabled ? <Volume2 size={18} /> : <VolumeX size={18} />}
-        </motion.button>
       </div>
     </div>
   );

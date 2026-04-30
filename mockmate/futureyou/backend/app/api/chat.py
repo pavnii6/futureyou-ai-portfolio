@@ -2,16 +2,23 @@ from __future__ import annotations
 
 from typing import List, Tuple, Optional
 
-from fastapi import APIRouter, HTTPException, Header, Request
+from fastapi import APIRouter, Header, Request
 
 from app.core.config import get_settings
 from app.core.safety import get_client_ip, get_rate_limiter, verify_turnstile
 from app.models.chat import ChatHistoryItem, ChatRequest, ChatResponse, Mode
-from app.services.openai_client import get_llm
+from app.services.groq_client import generate_chat_response
 from app.services.prompting import build_conversation_messages, build_system_prompt
 from app.services.rag import get_rag_engine
 
 router = APIRouter()
+FALLBACK_RESPONSE = (
+    "I am running in demo fallback mode because the Groq API is unavailable right now. "
+    "You can still explore the UI and demo scenarios, and once a valid GROQ_API_KEY is configured, "
+    "full AI responses will resume automatically."
+)
+
+
 
 
 def _format_context(chunks: List[Tuple[str, dict]]) -> str:
@@ -45,13 +52,12 @@ async def chat(
     await verify_turnstile(x_turnstile_token or "", remoteip=client_ip)
 
     rag_engine = get_rag_engine()
-    llm = get_llm()
-
     try:
         retrieved = await rag_engine.retrieve(req.message, k=settings.top_k)
         context = _format_context(retrieved)
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"RAG retrieval failed: {e}")
+    except Exception:
+        # Allow public demos to continue even when retrieval backends are unavailable.
+        context = ""
 
     system_prompt = build_system_prompt(context, req.mode)  # includes persona + mode rules
 
@@ -64,11 +70,8 @@ async def chat(
     )
 
     try:
-        result = await llm.ainvoke(messages)
-        content = getattr(result, "content", None)
-        if not content:
-            raise RuntimeError("Model returned empty content.")
-        return ChatResponse(response=str(content))
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"LLM generation failed: {e}")
+        content = await generate_chat_response(messages)
+        return ChatResponse(response=content)
+    except Exception:
+        return ChatResponse(response=FALLBACK_RESPONSE)
 

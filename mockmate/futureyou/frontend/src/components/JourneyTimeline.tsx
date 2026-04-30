@@ -17,7 +17,7 @@ export default function JourneyTimeline({
       <div className="flex items-center justify-between gap-3">
         <div>
           <div className="text-sm font-semibold text-slate-100">My Journey Timeline</div>
-          <div className="text-xs text-slate-400">Past -> present -> future, told like a product story</div>
+          <div className="text-xs text-slate-400">Past to present to future, told like a product story</div>
         </div>
         <div className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] uppercase tracking-[0.25em] text-slate-300/80">
           Storyline

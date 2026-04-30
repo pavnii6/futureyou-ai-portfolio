@@ -14,10 +14,12 @@ class Settings(BaseSettings):
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
-    # OpenAI
-    openai_api_key: str = ""
-    openai_chat_model: str = "gpt-4o-mini"
-    openai_embedding_model: str = "text-embedding-3-small"
+    # Groq LLM
+    groq_api_key: str = os.getenv("GROQ_API_KEY", "")
+    groq_chat_model: str = os.getenv("GROQ_CHAT_MODEL", "llama3-70b-8192")
+
+    # Local embeddings (non-OpenAI)
+    embedding_model: str = os.getenv("EMBEDDING_MODEL", "sentence-transformers/all-MiniLM-L6-v2")
 
     # RAG inputs
     data_dir: str = os.getenv("RAG_DATA_DIR", str(Path(__file__).resolve().parents[3] / "data"))
@@ -32,7 +34,7 @@ class Settings(BaseSettings):
     top_k: int = int(os.getenv("RAG_TOP_K", "6"))
 
     # Prompt / generation
-    temperature: float = float(os.getenv("OPENAI_TEMPERATURE", "0.6"))
+    temperature: float = float(os.getenv("LLM_TEMPERATURE", "0.6"))
     max_history_messages: int = int(os.getenv("MAX_HISTORY_MESSAGES", "12"))
 
     # App

@@ -2,8 +2,6 @@ from __future__ import annotations
 
 from typing import List
 
-from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
-
 from app.models.chat import ChatHistoryItem, Mode
 
 
@@ -58,16 +56,16 @@ def build_conversation_messages(
     system_prompt: str,
     history: List[ChatHistoryItem],
     user_message: str,
-) -> List[SystemMessage | HumanMessage | AIMessage]:
-    messages: List[SystemMessage | HumanMessage | AIMessage] = [SystemMessage(content=system_prompt)]
+) -> List[dict[str, str]]:
+    messages: List[dict[str, str]] = [{"role": "system", "content": system_prompt}]
 
     # Include prior turns as "user/assistant" for context (frontend sends alternating role items).
     for item in history:
         if item.role == "user":
-            messages.append(HumanMessage(content=item.content))
+            messages.append({"role": "user", "content": item.content})
         else:
-            messages.append(AIMessage(content=item.content))
+            messages.append({"role": "assistant", "content": item.content})
 
-    messages.append(HumanMessage(content=user_message))
+    messages.append({"role": "user", "content": user_message})
     return messages
 

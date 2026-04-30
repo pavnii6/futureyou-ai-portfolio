@@ -4,9 +4,9 @@ import asyncio
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
+from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_core.documents import Document
-from langchain_openai import OpenAIEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 from app.core.config import get_settings
@@ -20,7 +20,7 @@ def _read_text_file(path: Path) -> str:
 class RagEngine:
     def __init__(self) -> None:
         self._settings = get_settings()
-        self._embeddings = OpenAIEmbeddings(model=self._settings.openai_embedding_model)
+        self._embeddings = HuggingFaceEmbeddings(model_name=self._settings.embedding_model)
         self._vectorstore: Optional[FAISS] = None
         self._init_lock = asyncio.Lock()
 

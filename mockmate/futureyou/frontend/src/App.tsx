@@ -1,15 +1,14 @@
 import { motion } from "framer-motion";
-import { Sparkles, Volume2 } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-import AvatarOrb from "./components/AvatarOrb";
+import Avatar from "./components/Avatar";
+import ChatUI from "./components/ChatUI";
 import DemoShowcase from "./components/DemoShowcase";
 import JourneyTimeline from "./components/JourneyTimeline";
 import ModeToggle from "./components/ModeToggle";
-import TurnstileGate from "./components/TurnstileGate";
-import ChatPanel, { type ChatMessage } from "./components/Chat/ChatPanel";
-import InputBar from "./components/Chat/InputBar";
-import SuggestionsChips from "./components/Chat/SuggestionsChips";
+import VoiceController from "./components/VoiceController";
+import { type ChatMessage } from "./components/Chat/ChatPanel";
 import type { ChatMode, ChatHistoryItem } from "./api/client";
 import { sendChat } from "./api/client";
 import { demoConversations, timelinePhases } from "./data/showcase";
@@ -45,6 +44,8 @@ export default function App() {
   const [typingMessageId, setTypingMessageId] = useState<string | null>(null);
   const [voiceInputEnabled, setVoiceInputEnabled] = useState(false);
   const [voiceOutputEnabled, setVoiceOutputEnabled] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [speechQueueText, setSpeechQueueText] = useState<string | null>(null);
   const [isListening, setIsListening] = useState(false);
   const [activeTimelineId, setActiveTimelineId] = useState<string>(timelinePhases[1]?.id ?? "present");
   const [activeDemoId, setActiveDemoId] = useState<string | null>(null);
@@ -52,6 +53,7 @@ export default function App() {
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
 
   const pendingSpeakTextRef = useRef<string | null>(null);
+  const soundCtxRef = useRef<AudioContext | null>(null);
   const abortRef = useRef<AbortController | null>(null);
   const demoTimerRef = useRef<number | null>(null);
 
@@ -75,17 +77,26 @@ export default function App() {
     }
   }
 
-  function speakIfEnabled(text: string) {
-    if (!voiceOutputEnabled) return;
+  function playUiTick(freq = 460) {
     try {
-      window.speechSynthesis?.cancel?.();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.rate = 0.98;
-      utterance.pitch = 1.0;
-      utterance.volume = 1.0;
-      window.speechSynthesis.speak(utterance);
+      const Ctx = window.AudioContext || (window as any).webkitAudioContext;
+      if (!Ctx) return;
+      if (!soundCtxRef.current) soundCtxRef.current = new Ctx();
+      const ctx = soundCtxRef.current;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "triangle";
+      osc.frequency.value = freq;
+      gain.gain.value = 0.0001;
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      const now = ctx.currentTime;
+      gain.gain.exponentialRampToValueAtTime(0.045, now + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.09);
+      osc.start(now);
+      osc.stop(now + 0.1);
     } catch {
-      // ignore browser speech issues
+      // optional audio feedback only
     }
   }
 
@@ -159,7 +170,7 @@ export default function App() {
     const text = pendingSpeakTextRef.current;
     pendingSpeakTextRef.current = null;
     setTypingMessageId(null);
-    if (text) speakIfEnabled(text);
+    if (text && voiceOutputEnabled) setSpeechQueueText(text);
   }
 
   function runDemo(demoId: string) {
@@ -171,6 +182,7 @@ export default function App() {
     if (!demo) return;
 
     setMode(demo.mode);
+    playUiTick(560);
     setActiveDemoId(demo.id);
     setIsDemoPlaying(true);
     setTypingMessageId(null);
@@ -227,7 +239,7 @@ export default function App() {
           <div className="rounded-[28px] border border-white/10 bg-white/[0.04] p-4 backdrop-blur-xl shadow-[0_0_0_1px_rgba(255,255,255,.03),0_0_40px_rgba(56,189,248,.06)]">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <div className="text-sm font-semibold text-slate-100">FutureYou (2030)</div>
+                <div className="font-display text-sm font-semibold text-slate-100">FutureYou (2030)</div>
                 <div className="text-xs text-slate-400">Interactive AI portfolio</div>
               </div>
               <div className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] uppercase tracking-[0.22em] text-slate-300/85">
@@ -236,7 +248,7 @@ export default function App() {
             </div>
 
             <div className="mt-5 flex items-center justify-center">
-              <AvatarOrb isThinking={thinking} isListening={isListening} />
+              <Avatar mode={mode} isThinking={thinking} isListening={isListening} isSpeaking={isSpeaking} />
             </div>
 
             <div className="mt-4 rounded-3xl border border-white/10 bg-black/25 p-4">
@@ -253,29 +265,25 @@ export default function App() {
             </div>
 
             <div className="mt-4">
-              <ModeToggle mode={mode} onModeChange={(nextMode) => setMode(nextMode)} />
+              <ModeToggle
+                mode={mode}
+                onModeChange={(nextMode) => {
+                  playUiTick(590);
+                  setMode(nextMode);
+                }}
+              />
             </div>
 
-            <div className="mt-4 flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-3 py-3">
-              <div>
-                <div className="text-xs text-slate-400">Voice output</div>
-                <div className="mt-1 flex items-center gap-2 text-sm font-semibold text-slate-100">
-                  <Volume2 size={14} className={voiceOutputEnabled ? "text-cyan-200" : "text-slate-500"} />
-                  {voiceOutputEnabled ? "Enabled" : "Muted"}
-                </div>
-              </div>
-              <button
-                type="button"
-                onClick={() => setVoiceOutputEnabled((value) => !value)}
-                className={[
-                  "rounded-xl border px-3 py-2 text-xs font-semibold transition",
-                  voiceOutputEnabled
-                    ? "border-cyan-300/50 bg-cyan-400/10 text-cyan-100 shadow-neon"
-                    : "border-white/10 bg-white/5 text-slate-100/85 hover:bg-white/10",
-                ].join(" ")}
-              >
-                {voiceOutputEnabled ? "Speak replies" : "Enable"}
-              </button>
+            <div className="mt-4">
+              <VoiceController
+                enabled={voiceOutputEnabled}
+                setEnabled={setVoiceOutputEnabled}
+                speakText={speechQueueText}
+                onSpeakingChange={(speaking) => {
+                  setIsSpeaking(speaking);
+                  if (!speaking) setSpeechQueueText(null);
+                }}
+              />
             </div>
           </div>
 
@@ -287,7 +295,9 @@ export default function App() {
             <div className="flex flex-col gap-3 border-b border-white/10 pb-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <div className="text-[11px] uppercase tracking-[0.25em] text-slate-400">Talk to Future Me</div>
-                <div className="mt-1 text-2xl font-semibold tracking-tight text-white">A recruiter conversation, not a static portfolio</div>
+                <div className="font-display mt-1 text-2xl font-semibold tracking-tight text-white">
+                  A recruiter conversation, not a static portfolio
+                </div>
                 <div className="mt-2 max-w-2xl text-sm leading-6 text-slate-300/85">
                   Ask about projects, strengths, decisions, and ambition. The AI responds with memory, voice, and a more personal storytelling cadence grounded in your portfolio data.
                 </div>
@@ -300,38 +310,27 @@ export default function App() {
               </div>
             </div>
 
-            <div className="mt-4">
-              <ChatPanel messages={syncedMessages} thinking={thinking} onTypingDone={onAssistantTypingDone} />
-            </div>
-
-            <div className="mt-4 border-t border-white/10 pt-4">
-              <SuggestionsChips
-                mode={mode}
-                onPick={(text) => {
-                  void sendMessage(text);
-                }}
-              />
-            </div>
-
-            <div className="mt-4">
-              <InputBar
-                value={input}
-                onChange={setInput}
-                onSend={() => {
-                  void sendMessage();
-                }}
-                disabled={thinking}
-                voiceInputEnabled={voiceInputEnabled}
-                setVoiceInputEnabled={setVoiceInputEnabled}
-                voiceOutputEnabled={voiceOutputEnabled}
-                setVoiceOutputEnabled={setVoiceOutputEnabled}
-                onListeningChange={setIsListening}
-              />
-            </div>
-
-            <div className="mt-3">
-              <TurnstileGate onToken={setTurnstileToken} disabled={thinking || isDemoPlaying} />
-            </div>
+            <ChatUI
+              mode={mode}
+              messages={syncedMessages}
+              thinking={thinking}
+              input={input}
+              onInputChange={setInput}
+              onSend={() => {
+                playUiTick(520);
+                void sendMessage();
+              }}
+              onTypingDone={onAssistantTypingDone}
+              voiceInputEnabled={voiceInputEnabled}
+              setVoiceInputEnabled={setVoiceInputEnabled}
+              onListeningChange={setIsListening}
+              onSuggestionPick={(text) => {
+                playUiTick(500);
+                void sendMessage(text);
+              }}
+              turnstileDisabled={thinking || isDemoPlaying}
+              onTurnstileToken={setTurnstileToken}
+            />
           </section>
 
           <JourneyTimeline phases={timelinePhases} activeId={activeTimelineId} onSelect={setActiveTimelineId} />
