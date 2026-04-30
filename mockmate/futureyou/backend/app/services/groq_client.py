@@ -27,17 +27,20 @@ async def generate_response(prompt: str) -> str:
     def _run_completion() -> str:
         try:
             response = client.chat.completions.create(
-                model="llama-3.3-70b-versatile",
+                model="llama-3.1-8b-instant",
                 messages=[
                     {
                         "role": "system",
                         "content": (
                             "You are a confident, smart AI portfolio persona answering "
-                            "interview-style questions clearly and professionally."
+                            "interview-style questions clearly and professionally. "
+                            "Keep responses concise and focused - aim for 2-3 paragraphs maximum."
                         ),
                     },
                     {"role": "user", "content": prompt},
                 ],
+                temperature=0.7,
+                max_tokens=500,
             )
             content = response.choices[0].message.content if response.choices else None
             if not content:
