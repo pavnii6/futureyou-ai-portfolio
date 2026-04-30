@@ -1,18 +1,20 @@
 from __future__ import annotations
 
 import asyncio
-import os
 from functools import lru_cache
 import logging
 
 from groq import Groq
+
+from app.core.config import get_settings
 
 logger = logging.getLogger(__name__)
 
 
 @lru_cache(maxsize=1)
 def get_groq_client() -> Groq:
-    api_key = os.getenv("GROQ_API_KEY", "")
+    settings = get_settings()
+    api_key = settings.groq_api_key
     logger.info("GROQ_API_KEY configured: %s", bool(api_key))
     if not api_key:
         raise RuntimeError("GROQ_API_KEY is not set in the environment.")
@@ -25,7 +27,7 @@ async def generate_response(prompt: str) -> str:
     def _run_completion() -> str:
         try:
             response = client.chat.completions.create(
-                model="llama3-70b-8192",
+                model="llama-3.3-70b-versatile",
                 messages=[
                     {
                         "role": "system",

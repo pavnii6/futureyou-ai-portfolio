@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import os
 from functools import lru_cache
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -14,18 +13,18 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     # Groq
-    groq_api_key: str = os.getenv("GROQ_API_KEY", "")
+    groq_api_key: str = ""
     # App
-    cors_allow_origins: str = os.getenv("CORS_ALLOW_ORIGINS", "*")
-    port: int = int(os.getenv("PORT", "8000"))
+    cors_allow_origins: str = "*"
+    port: int = 8000
 
     # Production safety (public link)
-    rate_limit_window_seconds: int = int(os.getenv("RATE_LIMIT_WINDOW_SECONDS", "60"))
-    rate_limit_max_requests: int = int(os.getenv("RATE_LIMIT_MAX_REQUESTS", "20"))
+    rate_limit_window_seconds: int = 60
+    rate_limit_max_requests: int = 20
 
     # Cloudflare Turnstile (optional)
-    turnstile_secret_key: str = os.getenv("TURNSTILE_SECRET_KEY", "")
-    turnstile_required: bool = os.getenv("TURNSTILE_REQUIRED", "0") in ("1", "true", "True", "yes", "YES")
+    turnstile_secret_key: str = ""
+    turnstile_required: bool = False
 
 
 @lru_cache(maxsize=1)
