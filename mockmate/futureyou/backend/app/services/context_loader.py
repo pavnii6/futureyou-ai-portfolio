@@ -11,12 +11,18 @@ def load_portfolio_context() -> str:
     Load all portfolio data files and combine them into a single context string.
     This will be injected into the system prompt for grounded responses.
     """
-    data_dir = Path(__file__).parent.parent.parent / "data"
+    # Try the root data directory first, then fall back to backend/data
+    project_root = Path(__file__).parent.parent.parent.parent
+    data_dir = project_root / "data"
+    
+    if not data_dir.exists():
+        # Fall back to backend/data
+        data_dir = Path(__file__).parent.parent.parent / "data"
     
     context_parts = []
     
     # Load each data file
-    files_to_load = ["resume.txt", "projects.txt", "achievements.txt", "story.txt"]
+    files_to_load = ["resume.txt", "story.txt", "project.txt", "projects.txt", "achievements.txt"]
     
     for filename in files_to_load:
         file_path = data_dir / filename
