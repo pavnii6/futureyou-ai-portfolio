@@ -1,0 +1,6 @@
+//to be done
+achievement section
+hobbies section
+cards update
+add hackathon in achievement 
+remove unnecessary flashcards
